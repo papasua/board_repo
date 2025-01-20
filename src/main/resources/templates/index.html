@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="main-head">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<th:block layout:fragment="title"></th:block>
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+
+<th:block layout:fragment="add-css"></th:block>
+<style type="text/css">
+	a {
+	  text-decoration: none;
+	}
+	a:link {
+	  color : black;
+	}
+	a:visited {
+	  color : black;
+	}
+	a:hover {
+	  color : green;
+	}
+</style>
+</head>
+<script type="text/javascript">
+	
+	newPost = function(){
+		location.href = "/newPost";
+	}
+	
+	
+</script>
+<body>
+	
+	
+	<h1>게시판</h1>
+	
+	
+    <form th:action="@{/posts}" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="title">제목:</label>
+            <input type="text" id="title" name="title" required />
+        </div>
+        <div>
+            <label for="content">내용:</label>
+            <textarea id="content" name="content" required></textarea>
+        </div>
+        <div>
+            <label for="file">파일 첨부:</label>
+            <input type="file" id="file" name="file" />
+        </div>
+        <div>
+            <button type="button" onclick="newPost()">게시글 작성</button>
+        </div>
+    </form>
+
+    <hr />
+
+    <h2>게시글 목록</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>제목</th>
+                <th>내용</th>
+                <th>첨부파일</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="post : ${posts}">
+                <td th:text="${post.title}"></td>
+                <td th:text="${post.content}"></td>
+                <td>
+                    <a th:href="@{${post.fileUrl}}" th:text="${post.fileName}" th:if="${post.fileName}">다운로드</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+
+<div th:replace="inc/footer  :: footer"></div>
+
+</html>
