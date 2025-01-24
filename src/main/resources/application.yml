@@ -1,4 +1,10 @@
 spring:
+  profiles:
+    group: 
+      "dev-profile": "dev,jwt" 
+      "ops-profile": "ops,jwt"
+    active : dev-profile
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://146.56.177.153:3306/oci_mariaDB
